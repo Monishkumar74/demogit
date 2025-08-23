@@ -4,5 +4,8 @@ jobs:
   first-job:
     runs-on: ubuntu-latest
     steps:
-      -name: greeting
-      run: echo "welcome to new team"
+      - name: greeting
+        run: echo "welcome to new team"
+      
+      - name: Say bye
+        run: echo "bye bye..!"
