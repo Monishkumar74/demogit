@@ -26,7 +26,7 @@ jobs:
           pip install pytest pytest-cov
 
       - name: run tests
-        run: pytest pytest.py --cov=. --cov-report=xml --cov-report=terminal
+        run: pytest pytest.py
         
       - name: test complete
         run: echo "tests completed successfully!"
