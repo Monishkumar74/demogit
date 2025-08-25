@@ -13,12 +13,12 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Show checkbox value
-        run: echo "Checkbox selected: ${{github.event.inputs.my_checkbox}}"
+        run: echo "Checkbox selected. ${{github.event.inputs.my_checkbox}}"
   test1:
     runs-on: ubuntu-latest
     steps: 
       - name: Run only if checked
         if: ${{github.event.inputs.my_checkbox ==true}}
         run: echo "checkbox was selected!"
-        
+
 
