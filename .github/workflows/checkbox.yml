@@ -19,6 +19,6 @@ jobs:
     steps: 
       - name: Run only if checked
         if: ${{github.event.inputs.my_checkbox ==true}}
-        run: echo "checkbox was selected!"
+        run: echo "checkbox was selected! $MY_CHECKBOX"
 
 
