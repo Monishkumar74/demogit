@@ -1,12 +1,12 @@
 name: Checkbox example
 on:
   workflow_dispatch:
-  input:
-    my_checkbox:
-      description: "Enable this feature?"
-      required: false
-      defalut: true
-      type: boolean
+    input:
+      my_checkbox:
+        description: "Enable this feature?"
+        required: false
+        defalut: true
+        type: boolean
 
 jobs: 
   test:
