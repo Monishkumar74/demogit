@@ -1,5 +1,5 @@
 
-name: demo test
+name: Admin-Only Workflow
 
 on:
   workflow_dispatch:
@@ -7,6 +7,45 @@ on:
 jobs:
   verify-admin:
     runs-on: ubuntu-latest
+    outputs:
+      authorized: ${{ steps.check.outputs.authorized }}
     steps:
-      - name: Show who triggered the workflow
-        run: echo "Triggered by ${{ github.actor }}"
+      - name: Check if user is in repo-admins team
+        id: check
+        env:
+          ACTOR: ${{ github.actor }}
+          
+        run: |
+          echo "Checking if $ACTOR is in team $TEAM of org $ORG..."
+
+          RESPONSE=[ {
+    "login": "monishkumar-a",
+    "id": 123456,
+    "type": "User",
+    ...
+  },
+  {
+    "login": "pradhun-gosh",
+    "id": 789012,
+    "type": "User",
+    ...
+  }
+]
+
+
+          if echo "$RESPONSE" | grep -q "\"login\": \"$ACTOR\""; then
+            echo "$ACTOR is authorized."
+            echo "authorized=true" >> $GITHUB_OUTPUT
+          else
+            echo "$ACTOR is NOT authorized to run this workflow."
+            echo "authorized=false" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+
+  run-if-authorized:
+    needs: verify-admin
+    if: needs.verify-admin.outputs.authorized == 'true'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Run admin-only task
+        run: echo "Running secure job for authorized user: ${{ github.actor }}"
