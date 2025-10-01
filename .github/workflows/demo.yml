@@ -48,4 +48,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Run admin-only task
-        run: echo "Running secure job for authorized user: ${{ github.actor }}"
+        run: echo "Running secure job for  authorized user: ${{ github.actor }}"
