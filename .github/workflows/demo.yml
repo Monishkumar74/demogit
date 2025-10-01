@@ -1,0 +1,12 @@
+
+name: demo test
+
+on:
+  workflow_dispatch:
+
+jobs:
+  verify-admin:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Show who triggered the workflow
+        run: echo "Triggered by ${{ github.actor }}"
