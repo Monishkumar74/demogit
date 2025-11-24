@@ -1,16 +1,16 @@
 name: Checkbox example
 on:
   workflow_dispatch:
-    input:
+    inputs:
       test:
         description: "Enable this feature? test"
         required: false
-        defalut: true
+        default: true
         type: boolean
       test1:
         description: "Enable this feature? test1"
         required: false
-        defalut: true
+        default: true
         type: boolean
 
 jobs: 
@@ -18,13 +18,13 @@ jobs:
     runs-on: ubuntu-latest
     steps: 
       - name: Show checkbox value
-        run: echo "Checkbox selected. ${{github.event.inputs.my_checkbox}}"
+        run: echo "Checkbox selected. test"
   test1:
     needs: test
     runs-on: ubuntu-latest
     steps: 
       - name: Run only if checked
-        if: ${{github.event.inputs.my_checkbox ==true}}
-        run: echo "checkbox was selected! $MY_CHECKBOX"
+        if: ${{github.event.inputs.test1 ==true}}
+        run: echo "checkbox was selected! test1"
 
 
