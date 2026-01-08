@@ -33,7 +33,7 @@ jobs:
 
     - name: Create and push Git tag
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
       run: |
         TAGNAME="$RELEASE_NO.${{ github.run_number }}"
         echo "TAG_NAME= ${TAGNAME}"
