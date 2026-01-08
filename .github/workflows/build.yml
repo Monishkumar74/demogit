@@ -1,0 +1,50 @@
+name: CI Build 
+on:
+  workflow_dispatch:
+    inputs:
+      RELEASE_NO:
+        description: 'Release Number'
+        required: false
+        default: '1.1'
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v5
+      
+    - name: Set RELEASE_NO fallback
+      run: |
+        RELEASE_NO="${{ github.event.inputs.RELEASE_NO }}"
+        if [ -z "$RELEASE_NO" ]; then
+          RELEASE_NO="1.1"
+        fi
+        echo "RELEASE_NO=$RELEASE_NO" >> $GITHUB_ENV
+    - name: create zip file
+      id: create_zip
+      run: |
+        TAGNAME="$RELEASE_NO.${{ github.run_number }}"
+        ZIPNAME="${TAGNAME}.zip"
+        echo ZIPNAME="${TAGNAME}.zip" >> $GITHUB_ENV
+        echo "zipname=${ZIPNAME}" >> $GITHUB_OUTPUT
+        zip -r ${ZIPNAME} ./
+        echo "Creating archive: ${ZIPNAME}"
+        # tar -czvf ${ZIPNAME} ./
+
+    - name: Create and push Git tag
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        TAGNAME="$RELEASE_NO.${{ github.run_number }}"
+        echo "TAG_NAME= ${TAGNAME}"
+        git config user.name "github-actions"
+        git config user.email "github-actions@github.com"
+        git tag $TAGNAME
+        git push origin $TAGNAME
+        ls
+          
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: code-artifact
+        path: ${{ github.workspace }}/${{ env.ZIPNAME }}
