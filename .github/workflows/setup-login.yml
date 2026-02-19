@@ -30,3 +30,7 @@ jobs:
           gh secret set DEPLOY_LB_IP --body "$lb_ip"
           
           echo "Secrets stored successfully"
+
+      - name: Verify stored secrets
+        run: |
+          echo "Username: ${{ secrets.DEPLOY_USERNAME }}"
