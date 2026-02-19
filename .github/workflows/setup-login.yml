@@ -19,6 +19,9 @@ jobs:
             password=$(echo "$value" | grep -oP 'password=\K[^;]+')
             lb_ip=$(echo "$value" | grep -oP 'lb_ip=\K[^;]+')
 
-            echo "Username: $username"
-            echo "Password: $password"
-            echo "LB IP: $lb_ip"
+            # Store values in GitHub Secrets
+            gh secret set DEPLOY_USERNAME --body "$username"
+            gh secret set DEPLOY_PASSWORD --body "$password"
+            gh secret set DEPLOY_LB_IP --body "$lb_ip"
+            
+            echo "Secrets stored successfully"
