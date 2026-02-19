@@ -15,7 +15,7 @@ jobs:
       
       - name: value sorting and push to github secrets
         env:
-          GH_TOKEN: ${{ github.token }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         run: |
           value="username=pet_moni;password=FBASIUFL49RO3RJ4RH7E6F5452E03009895667323*^#$%@@#* O8R76R7823R&^(#9I;lb_ip=10.0.0.16"
 
