@@ -1,0 +1,24 @@
+name: setup login
+on:
+  workflow_dispatch:
+    inputs:
+      BRANCH_TAG: 
+        description: 'Branch to Build. 1.Image built on branch main/release/hotfix are targeted for PROD ACR. 2.Image built on branch feature/develop are targeted for DEV ACR '
+        required: true
+        type: string
+jobs:
+  sort-value:
+    runs-on: ubuntu-latest
+    steps:
+      - name: value sorting and push to github secrets
+        run: |
+          value="username=pet_moni;password=FBASIUFL49RO3RJ4RH7E6F5452E03009895667323*^#$%@@#* O8R76R7823R&^(#9I;lb_ip=10.0.0.16"
+
+            # Method 1: Using sed to extract each variable
+            username=$(echo "$value" | grep -oP 'username=\K[^;]+')
+            password=$(echo "$value" | grep -oP 'password=\K[^;]+')
+            lb_ip=$(echo "$value" | grep -oP 'lb_ip=\K[^;]+')
+
+            echo "Username: $username"
+            echo "Password: $password"
+            echo "LB IP: $lb_ip"
